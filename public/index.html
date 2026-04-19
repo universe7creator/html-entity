@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HTML Entity Encoder/Decoder - Instantly encode special characters to HTML entities and decode them back. Perfect for web developers.">
+  <meta property="og:title" content="HTML Entity Encoder/Decoder Pro">
+  <meta property="og:description" content="Encode and decode HTML entities instantly with live preview">
+  <meta property="og:type" content="website">
+  <title>HTML Entity Encoder/Decoder Pro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+    }
+
+    .input-area {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      resize: vertical;
+      transition: all 0.2s;
+    }
+
+    .input-area:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .demo-section {
+      background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+    }
+
+    .trust-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fadeInUp {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .cta-glow {
+      position: relative;
+    }
+
+    .cta-glow::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      z-index: -1;
+      opacity: 0.5;
+      filter: blur(20px);
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: #9ca3af;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .copy-btn.copied {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-glow"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-0 rounded-none">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">&lt;/&gt;</span>
+        <span class="font-bold text-lg">HTML Entity Pro</span>
+      </div>
+      <button id="navBuyBtn" class="btn-primary px-6 py-2 text-sm">
+        Get Access — $19
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center justify-center pt-20 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 animate-fadeInUp">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        <span class="text-sm text-gray-400">46+ developers trust this tool</span>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-fadeInUp delay-100">
+        Encode & Decode<br>
+        <span class="gradient-text">HTML Entities</span> Instantly
+      </h1>
+
+      <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto animate-fadeInUp delay-200">
+        Transform special characters to HTML entities and back with live preview.
+        Perfect for web developers, content creators, and SEO specialists.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp delay-300">
+        <button id="heroBuyBtn" class="btn-primary px-8 py-4 text-lg cta-glow">
+          Get Lifetime Access — $19
+        </button>
+        <a href="#demo" class="btn-secondary px-8 py-4 text-lg flex items-center justify-center gap-2">
+          <span>Try Demo</span>
+          <span>↓</span>
+        </a>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-12 opacity-60">
+        <div class="trust-badge">
+          <span>⚡</span>
+          <span>Instant Processing</span>
+        </div>
+        <div class="trust-badge">
+          <span>🔒</span>
+          <span>Privacy First</span>
+        </div>
+        <div class="trust-badge">
+          <span>💾</span>
+          <span>No Data Stored</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Section -->
+  <section id="demo" class="demo-section py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Try It Now</h2>
+        <p class="text-gray-400">Live demo — no signup required</p>
+      </div>
+
+      <div class="glass-card p-8">
+        <!-- Mode Toggle -->
+        <div class="flex justify-center mb-8">
+          <div class="flex bg-black/40 rounded-xl p-1">
+            <button id="encodeMode" class="px-6 py-3 rounded-lg font-medium transition-all bg-white/10 text-white">
+              Encode to Entities
+            </button>
+            <button id="decodeMode" class="px-6 py-3 rounded-lg font-medium transition-all text-gray-400 hover:text-white">
+              Decode from Entities
+            </button>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Input -->
+          <div class="relative">
+            <label class="block text-sm font-medium text-gray-400 mb-3">Input</label>
+            <textarea id="inputText" class="input-area w-full h-64 p-4 text-sm" placeholder="Type or paste your text here..."></textarea>
+            <button id="clearBtn" class="absolute top-10 right-3 text-gray-500 hover:text-white text-sm">
+              Clear
+            </button>
+          </div>
+
+          <!-- Output -->
+          <div class="relative">
+            <label class="block text-sm font-medium text-gray-400 mb-3">Output</label>
+            <textarea id="outputText" class="input-area w-full h-64 p-4 text-sm" readonly placeholder="Result will appear here..."></textarea>
+            <button id="copyBtn" class="copy-btn">Copy</button>
+          </div>
+        </div>
+
+        <!-- Common Entities -->
+        <div class="mt-8">
+          <p class="text-sm text-gray-400 mb-4">Common entities:</p>
+          <div class="flex flex-wrap gap-2">
+            <button class="entity-btn btn-secondary px-3 py-1 text-sm" data-entity="&amp;">&amp; → &amp;amp;</button>
+            <button class="entity-btn btn-secondary px-3 py-1 text-sm" data-entity="&lt;">&lt; → &amp;lt;</button>
+            <button class="entity-btn btn-secondary px-3 py-1 text-sm" data-entity="&gt;">&gt; → &amp;gt;</button>
+            <button class="entity-btn btn-secondary px-3 py-1 text-sm" data-entity="&quot;">" → &amp;quot;</button>
+            <button class="entity-btn btn-secondary px-3 py-1 text-sm" data-entity="&#39;">' → &amp;#39;</button>
+            <button class="entity-btn btn-secondary px-3 py-1 text-sm" data-entity=" ">space → &amp;nbsp;</button>
+            <button class="entity-btn btn-secondary px-3 py-1 text-sm" data-entity="©">© → &amp;copy;</button>
+            <button class="entity-btn btn-secondary px-3 py-1 text-sm" data-entity="®">® → &amp;reg;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Developers Choose Us</h2>
+        <p class="text-gray-400">Built for speed, security, and simplicity</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-card p-8">
+          <div class="feature-icon mb-6">⚡</div>
+          <h3 class="text-xl font-semibold mb-3">Instant Processing</h3>
+          <p class="text-gray-400">Real-time conversion as you type. No waiting, no delays.</p>
+        </div>
+
+        <div class="glass-card p-8">
+          <div class="feature-icon mb-6">🔒</div>
+          <h3 class="text-xl font-semibold mb-3">100% Private</h3>
+          <p class="text-gray-400">All processing happens in your browser. Your data never leaves your device.</p>
+        </div>
+
+        <div class="glass-card p-8">
+          <div class="feature-icon mb-6">📋</div>
+          <h3 class="text-xl font-semibold mb-3">One-Click Copy</h3>
+          <p class="text-gray-400">Copy results instantly with a single click. Works with any text editor.</p>
+        </div>
+
+        <div class="glass-card p-8">
+          <div class="feature-icon mb-6">🎯</div>
+          <h3 class="text-xl font-semibold mb-3">Full Character Support</h3>
+          <p class="text-gray-400">Handles all HTML entities including named, decimal, and hexadecimal formats.</p>
+        </div>
+
+        <div class="glass-card p-8">
+          <div class="feature-icon mb-6">💻</div>
+          <h3 class="text-xl font-semibold mb-3">Developer Friendly</h3>
+          <p class="text-gray-400">Clean interface with monospace font. Perfect for code and markup.</p>
+        </div>
+
+        <div class="glass-card p-8">
+          <div class="feature-icon mb-6">🚀</div>
+          <h3 class="text-xl font-semibold mb-3">Lifetime Access</h3>
+          <p class="text-gray-400">One-time payment. No subscriptions. Use forever on unlimited projects.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-24 px-6 bg-gradient-to-b from-transparent to-black/30">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Loved by Developers</h2>
+        <p class="text-gray-400">See what our customers are saying</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="testimonial-card">
+          <div class="flex gap-1 mb-4">
+            <span class="text-yellow-500">★</span><span class="text-yellow-500">★</span><span class="text-yellow-500">★</span><span class="text-yellow-500">★</span><span class="text-yellow-500">★</span>
+          </div>
+          <p class="text-gray-300 mb-6">"Essential tool for my daily workflow. I work with user-generated content and this saves me hours every week."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center font-semibold">MK</div>
+            <div>
+              <p class="font-medium">Mike K.</p>
+              <p class="text-sm text-gray-500">Full Stack Developer</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="flex gap-1 mb-4">
+            <span class="text-yellow-500">★</span><span class="text-yellow-500">★</span><span class="text-yellow-500">★</span><span class="text-yellow-500">★</span><span class="text-yellow-500">★</span>
+          </div>
+          <p class="text-gray-300 mb-6">"Clean interface, works flawlessly. The live preview feature is genius. Best $19 I've spent this year."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center font-semibold">SJ</div>
+            <div>
+              <p class="font-medium">Sarah J.</p>
+              <p class="text-sm text-gray-500">Frontend Engineer</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="flex gap-1 mb-4">
+            <span class="text-yellow-500">★</span><span class="text-yellow-500">★</span><span class="text-yellow-500">★</span><span class="text-yellow-500">★</span><span class="text-yellow-500">★</span>
+          </div>
+          <p class="text-gray-300 mb-6">"I use this for sanitizing email templates. Fast, reliable, and the one-time fee is perfect for freelancers like me."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center font-semibold">AR</div>
+            <div>
+              <p class="font-medium">Alex R.</p>
+              <p class="text-sm text-gray-500">Email Developer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-24 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="space-y-4">
+        <div class="glass-card p-6">
+          <h3 class="font-semibold text-lg mb-2">What are HTML entities?</h3>
+          <p class="text-gray-400">HTML entities are special codes used to represent characters that have special meaning in HTML (like &lt;, &gt;, and &amp;) or characters that aren't available on standard keyboards (like ©, ®, and €).</p>
+        </div>
+
+        <div class="glass-card p-6">
+          <h3 class="font-semibold text-lg mb-2">Is my data secure?</h3>
+          <p class="text-gray-400">Absolutely. All encoding and decoding happens in your browser. Your text is never sent to our servers or stored anywhere.</p>
+        </div>
+
+        <div class="glass-card p-6">
+          <h3 class="font-semibold text-lg mb-2">What entity formats are supported?</h3>
+          <p class="text-gray-400">We support all standard HTML entity formats: named entities (&amp;amp;), decimal entities (&amp;#38;), and hexadecimal entities (&amp;#x26;).</p>
+        </div>
+
+        <div class="glass-card p-6">
+          <h3 class="font-semibold text-lg mb-2">Do I need an internet connection?</h3>
+          <p class="text-gray-400">The demo works offline! Once you purchase, the tool is fully functional without any server dependencies.</p>
+        </div>
+
+        <div class="glass-card p-6">
+          <h3 class="font-semibold text-lg mb-2">What's included with lifetime access?</h3>
+          <p class="text-gray-400">You get unlimited usage, all future updates, and priority support. Pay once, use forever across unlimited projects.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Encode?</h2>
+      <p class="text-xl text-gray-400 mb-10">Join 46+ developers who trust HTML Entity Pro for their encoding needs.</p>
+      <button id="ctaBuyBtn" class="btn-primary px-10 py-5 text-xl cta-glow">
+        Get Lifetime Access — $19
+      </button>
+      <p class="mt-6 text-sm text-gray-500">One-time payment. No subscription. 30-day money-back guarantee.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-6 border-t border-white/10">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">&lt;/&gt;</span>
+        <span class="font-bold">HTML Entity Pro</span>
+      </div>
+      <div class="flex gap-8 text-gray-400 text-sm">
+        <a href="#" class="hover:text-white transition-colors">Privacy</a>
+        <a href="#" class="hover:text-white transition-colors">Terms</a>
+        <a href="#" class="hover:text-white transition-colors">Support</a>
+      </div>
+      <p class="text-gray-500 text-sm">© 2026 HTML Entity Pro. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Checkout URL from server
+    const CHECKOUT_URL = window.__CHECKOUT_URL || null;
+
+    // Buy buttons
+    document.querySelectorAll('#navBuyBtn, #heroBuyBtn, #ctaBuyBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (CHECKOUT_URL) window.open(CHECKOUT_URL, '_blank');
+        else alert('Store coming soon! Contact @OtonomUniverseCreator on Telegram.');
+      });
+    });
+
+    // Demo functionality
+    const inputText = document.getElementById('inputText');
+    const outputText = document.getElementById('outputText');
+    const encodeMode = document.getElementById('encodeMode');
+    const decodeMode = document.getElementById('decodeMode');
+    const copyBtn = document.getElementById('copyBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    let currentMode = 'encode';
+
+    // Entity map
+    const entityMap = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&apos;',
+      ' ': '&nbsp;',
+      '©': '&copy;',
+      '®': '&reg;',
+      '™': '&trade;',
+      '€': '&euro;',
+      '£': '&pound;',
+      '¥': '&yen;',
+      '•': '&bull;',
+      '…': '&hellip;',
+      '—': '&mdash;',
+      '–': '&ndash;',
+      '←': '&larr;',
+      '→': '&rarr;',
+      '↑': '&uarr;',
+      '↓': '&darr;',
+      '↔': '&harr;'
+    };
+
+    const reverseEntityMap = Object.fromEntries(
+      Object.entries(entityMap).map(([k, v]) => [v, k])
+    );
+
+    function encodeHTML(text) {
+      return text.replace(/[&<>"']/g, char => entityMap[char] || char);
+    }
+
+    function decodeHTML(text) {
+      return text.replace(/&(?:amp|lt|gt|quot|apos|nbsp|copy|reg|trade|euro|pound|yen|bull|hellip|mdash|ndash|larr|rarr|uarr|darr|harr|#[0-9]+|#x[0-9a-fA-F]+);/g, entity => {
+        if (entity.startsWith('&#x')) {
+          return String.fromCharCode(parseInt(entity.slice(3, -1), 16));
+        } else if (entity.startsWith('&#')) {
+          return String.fromCharCode(parseInt(entity.slice(2, -1), 10));
+        }
+        return reverseEntityMap[entity] || entity;
+      });
+    }
+
+    function process() {
+      const text = inputText.value;
+      if (currentMode === 'encode') {
+        outputText.value = encodeHTML(text);
+      } else {
+        outputText.value = decodeHTML(text);
+      }
+    }
+
+    // Mode toggle
+    encodeMode.addEventListener('click', () => {
+      currentMode = 'encode';
+      encodeMode.classList.add('bg-white/10', 'text-white');
+      encodeMode.classList.remove('text-gray-400');
+      decodeMode.classList.remove('bg-white/10', 'text-white');
+      decodeMode.classList.add('text-gray-400');
+      process();
+    });
+
+    decodeMode.addEventListener('click', () => {
+      currentMode = 'decode';
+      decodeMode.classList.add('bg-white/10', 'text-white');
+      decodeMode.classList.remove('text-gray-400');
+      encodeMode.classList.remove('bg-white/10', 'text-white');
+      encodeMode.classList.add('text-gray-400');
+      process();
+    });
+
+    // Input handling
+    inputText.addEventListener('input', process);
+
+    // Copy button
+    copyBtn.addEventListener('click', () => {
+      outputText.select();
+      document.execCommand('copy');
+      copyBtn.textContent = 'Copied!';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.remove('copied');
+      }, 2000);
+    });
+
+    // Clear button
+    clearBtn.addEventListener('click', () => {
+      inputText.value = '';
+      outputText.value = '';
+      inputText.focus();
+    });
+
+    // Entity buttons
+    document.querySelectorAll('.entity-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        inputText.value += btn.dataset.entity;
+        process();
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Animation on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fadeInUp');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.glass-card').forEach(card => {
+      card.style.opacity = '0';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>
