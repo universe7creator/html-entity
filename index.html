@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Entity Encoder/Decoder - Convert Special Characters</title>
+    <meta name="description" content="Encode and decode HTML entities instantly. Convert special characters to HTML entities and back with live preview.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-button {
+            position: relative;
+            overflow: hidden;
+        }
+        .glow-button::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+            background-size: 300% 100%;
+            animation: glow 3s linear infinite;
+            border-radius: inherit;
+            z-index: -1;
+        }
+        @keyframes glow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+        .textarea-focus:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-mono font-bold">&amp;</div>
+                    <span class="font-bold text-xl">HTML Entity</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-gray-400 hover:text-white transition">Features</a>
+                    <a href="#demo" class="text-gray-400 hover:text-white transition">Demo</a>
+                    <a href="#faq" class="text-gray-400 hover:text-white transition">FAQ</a>
+                </div>
+                <a href="https://github.com/universe7creator/html-entity" class="text-gray-400 hover:text-white transition">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                <span class="gradient-text">HTML Entity</span><br>
+                Encoder/Decoder
+            </h1>
+            <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                Convert special characters to HTML entities and back instantly. Perfect for developers, content creators, and webmasters.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#demo" class="glow-button px-8 py-4 bg-blue-600 rounded-xl font-semibold text-lg hover:bg-blue-700 transition">
+                    Try It Free
+                </a>
+                <button onclick="showPricing()" class="px-8 py-4 glass rounded-xl font-semibold text-lg hover:bg-white/10 transition">
+                    Get Pro - $9
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="py-20 px-4 sm:px-6 lg:px-8 bg-white/5">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Live Demo</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Encode Section -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                        Text to HTML Entities
+                    </h3>
+                    <textarea id="encodeInput" placeholder="Type text with special chars: <div>Hello & Welcome!</div>" class="w-full h-32 bg-black/30 rounded-xl p-4 font-mono text-sm textarea-focus resize-none mb-4"></textarea>
+                    <button onclick="encodeEntities()" class="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition mb-4">Encode</button>
+                    <textarea id="encodeOutput" readonly placeholder="&lt;div&gt;Hello &amp; Welcome!&lt;/div&gt;" class="w-full h-32 bg-black/50 rounded-xl p-4 font-mono text-sm resize-none text-green-400"></textarea>
+                </div>
+
+                <!-- Decode Section -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                        HTML Entities to Text
+                    </h3>
+                    <textarea id="decodeInput" placeholder="&lt;div&gt;Hello &amp; Welcome!&lt;/div&gt;" class="w-full h-32 bg-black/30 rounded-xl p-4 font-mono text-sm textarea-focus resize-none mb-4"></textarea>
+                    <button onclick="decodeEntities()" class="w-full py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium transition mb-4">Decode</button>
+                    <textarea id="decodeOutput" readonly placeholder="<div>Hello & Welcome!</div>" class="w-full h-32 bg-black/50 rounded-xl p-4 font-mono text-sm resize-none text-green-400"></textarea>
+                </div>
+            </div>
+
+            <!-- Common Entities Reference -->
+            <div class="mt-8 glass rounded-2xl p-6">
+                <h3 class="text-lg font-semibold mb-4">Common HTML Entities</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-3">
+                    <div class="bg-black/30 rounded-lg p-3 text-center cursor-pointer hover:bg-white/10 transition" onclick="insertEntity('&amp;amp;')">
+                        <code class="text-blue-400">&amp;amp;</code>
+                        <div class="text-xs text-gray-500 mt-1">&</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-3 text-center cursor-pointer hover:bg-white/10 transition" onclick="insertEntity('&amp;lt;')">
+                        <code class="text-blue-400">&amp;lt;</code>
+                        <div class="text-xs text-gray-500 mt-1">&lt;</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-3 text-center cursor-pointer hover:bg-white/10 transition" onclick="insertEntity('&amp;gt;')">
+                        <code class="text-blue-400">&amp;gt;</code>
+                        <div class="text-xs text-gray-500 mt-1">&gt;</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-3 text-center cursor-pointer hover:bg-white/10 transition" onclick="insertEntity('&amp;quot;')">
+                        <code class="text-blue-400">&amp;quot;</code>
+                        <div class="text-xs text-gray-500 mt-1">"</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-3 text-center cursor-pointer hover:bg-white/10 transition" onclick="insertEntity('&amp;apos;')">
+                        <code class="text-blue-400">&amp;apos;</code>
+                        <div class="text-xs text-gray-500 mt-1">'</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-3 text-center cursor-pointer hover:bg-white/10 transition" onclick="insertEntity('&amp;nbsp;')">
+                        <code class="text-blue-400">&amp;nbsp;</code>
+                        <div class="text-xs text-gray-500 mt-1">space</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-3 text-center cursor-pointer hover:bg-white/10 transition" onclick="insertEntity('&amp;copy;')">
+                        <code class="text-blue-400">&amp;copy;</code>
+                        <div class="text-xs text-gray-500 mt-1">©</div>
+                    </div>
+                    <div class="bg-black/30 rounded-lg p-3 text-center cursor-pointer hover:bg-white/10 transition" onclick="insertEntity('&amp;reg;')">
+                        <code class="text-blue-400">&amp;reg;</code>
+                        <div class="text-xs text-gray-500 mt-1">®</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Features</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Instant Conversion</h3>
+                    <p class="text-gray-400">Real-time encoding and decoding with live preview. No page reloads.</p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Copy to Clipboard</h3>
+                    <p class="text-gray-400">One-click copying of results. Works with all entity types.</p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Common Reference</h3>
+                    <p class="text-gray-400">Quick reference table of most-used HTML entities with click-to-insert.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 px-4 sm:px-6 lg:px-8 bg-white/5">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">FAQ</h2>
+            <div class="space-y-4">
+                <div class="glass rounded-xl p-6">
+                    <h3 class="font-semibold mb-2">What are HTML entities?</h3>
+                    <p class="text-gray-400">HTML entities are special codes used to represent characters that have special meaning in HTML, like &lt; (&amp;lt;) and &gt; (&amp;gt;), or characters not on a standard keyboard.</p>
+                </div>
+                <div class="glass rounded-xl p-6">
+                    <h3 class="font-semibold mb-2">Why do I need to encode special characters?</h3>
+                    <p class="text-gray-400">Special characters like &lt; and &gt; are interpreted as HTML tags by browsers. To display them as text, you must use their entity equivalents (&amp;lt; and &amp;gt;).</p>
+                </div>
+                <div class="glass rounded-xl p-6">
+                    <h3 class="font-semibold mb-2">Is this tool free to use?</h3>
+                    <p class="text-gray-400">Yes! The basic encoding/decoding is completely free. Pro version includes bulk processing and API access.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4 border-t border-white/10">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <div class="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded flex items-center justify-center font-mono text-xs font-bold">&amp;</div>
+                <span class="font-semibold">HTML Entity Encoder/Decoder</span>
+            </div>
+            <div class="text-gray-500 text-sm">
+                &copy; 2024 UniverseCreator. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function encodeEntities() {
+            const input = document.getElementById('encodeInput').value;
+            const output = input.replace(/[&<>"']/g, function(m) {
+                return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;'}[m];
+            });
+            document.getElementById('encodeOutput').value = output;
+        }
+
+        function decodeEntities() {
+            const input = document.getElementById('decodeInput').value;
+            const textarea = document.createElement('textarea');
+            textarea.innerHTML = input;
+            document.getElementById('decodeOutput').value = textarea.value;
+        }
+
+        function insertEntity(entity) {
+            const decodeInput = document.getElementById('decodeInput');
+            decodeInput.value = entity;
+            decodeEntities();
+        }
+
+        function showPricing() {
+            alert('Pro version coming soon! Contact us for early access.');
+        }
+
+        // Live encoding on input
+        document.getElementById('encodeInput').addEventListener('input', encodeEntities);
+        document.getElementById('decodeInput').addEventListener('input', decodeEntities);
+    </script>
+</body>
+</html>
